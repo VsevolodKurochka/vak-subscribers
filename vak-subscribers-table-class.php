@@ -45,7 +45,7 @@ if(!class_exists('WP_List_Table')){
  * then call $yourInstance->prepare_items() to handle any data manipulation, then
  * finally call $yourInstance->display() to render the table to the page.
  * 
- * Our theme for this list table is going to be movies.
+ * Our theme for this list table is going to be subscribers.
  */
 class TT_Example_List_Table extends WP_List_Table {
 		
@@ -61,56 +61,56 @@ class TT_Example_List_Table extends WP_List_Table {
 		 * @var array 
 		 **************************************************************************/
 
-		var $example_data = array(
-						array(
-								'ID'        => 1,
-								'title'     => '300',
-								'rating'    => 'R',
-								'director'  => 'Zach Snyder'
-						),
-						array(
-								'ID'        => 2,
-								'title'     => 'Eyes Wide Shut',
-								'rating'    => 'R',
-								'director'  => 'Stanley Kubrick'
-						),
-						array(
-								'ID'        => 3,
-								'title'     => 'Moulin Rouge!',
-								'rating'    => 'PG-13',
-								'director'  => 'Baz Luhrman'
-						),
-						array(
-								'ID'        => 4,
-								'title'     => 'Snow White',
-								'rating'    => 'G',
-								'director'  => 'Walt Disney'
-						),
-						array(
-								'ID'        => 5,
-								'title'     => 'Super 8',
-								'rating'    => 'PG-13',
-								'director'  => 'JJ Abrams'
-						),
-						array(
-								'ID'        => 6,
-								'title'     => 'The Fountain',
-								'rating'    => 'PG-13',
-								'director'  => 'Darren Aronofsky'
-						),
-						array(
-								'ID'        => 7,
-								'title'     => 'Watchmen',
-								'rating'    => 'R',
-								'director'  => 'Zach Snyder'
-						),
-						array(
-								'ID'        => 8,
-								'title'     => '2001',
-								'rating'    => 'G',
-								'director'  => 'Stanley Kubrick'
-						),
-				);
+		// var $example_data = array(
+		// 		array(
+		// 				'ID'        => 1,
+		// 				'title'     => '300',
+		// 				'rating'    => 'R',
+		// 				'director'  => 'Zach Snyder'
+		// 		),
+		// 		array(
+		// 				'ID'        => 2,
+		// 				'title'     => 'Eyes Wide Shut',
+		// 				'rating'    => 'R',
+		// 				'director'  => 'Stanley Kubrick'
+		// 		),
+		// 		array(
+		// 				'ID'        => 3,
+		// 				'title'     => 'Moulin Rouge!',
+		// 				'rating'    => 'PG-13',
+		// 				'director'  => 'Baz Luhrman'
+		// 		),
+		// 		array(
+		// 				'ID'        => 4,
+		// 				'title'     => 'Snow White',
+		// 				'rating'    => 'G',
+		// 				'director'  => 'Walt Disney'
+		// 		),
+		// 		array(
+		// 				'ID'        => 5,
+		// 				'title'     => 'Super 8',
+		// 				'rating'    => 'PG-13',
+		// 				'director'  => 'JJ Abrams'
+		// 		),
+		// 		array(
+		// 				'ID'        => 6,
+		// 				'title'     => 'The Fountain',
+		// 				'rating'    => 'PG-13',
+		// 				'director'  => 'Darren Aronofsky'
+		// 		),
+		// 		array(
+		// 				'ID'        => 7,
+		// 				'title'     => 'Watchmen',
+		// 				'rating'    => 'R',
+		// 				'director'  => 'Zach Snyder'
+		// 		),
+		// 		array(
+		// 				'ID'        => 8,
+		// 				'title'     => '2001',
+		// 				'rating'    => 'G',
+		// 				'director'  => 'Stanley Kubrick'
+		// 		),
+		// );
 
 
 		/** ************************************************************************
@@ -122,8 +122,8 @@ class TT_Example_List_Table extends WP_List_Table {
 								
 				//Set parent defaults
 				parent::__construct( array(
-						'singular'  => 'movie',     //singular name of the listed records
-						'plural'    => 'movies',    //plural name of the listed records
+						'singular'  => 'subscriber',     //singular name of the listed records
+						'plural'    => 'subscribers',    //plural name of the listed records
 						'ajax'      => false        //does this table support ajax?
 				) );
 				
@@ -153,9 +153,11 @@ class TT_Example_List_Table extends WP_List_Table {
 		 **************************************************************************/
 		function column_default($item, $column_name){
 				switch($column_name){
+						case 'id':
 						case 'name':
 						case 'email':
 						case 'phone':
+						case 'place':
 								return $item->$column_name;
 						default:
 								return print_r($item,true); //Show the whole array for troubleshooting purposes
@@ -177,14 +179,14 @@ class TT_Example_List_Table extends WP_List_Table {
 		 * 
 		 * @see WP_List_Table::::single_row_columns()
 		 * @param array $item A singular item (one full row's worth of data)
-		 * @return string Text to be placed inside the column <td> (movie title only)
+		 * @return string Text to be placed inside the column <td> (subscriber title only)
 		 **************************************************************************/
 		function column_title($item){
 				
 				//Build row actions
 				$actions = array(
-						'edit'      => sprintf('<a href="?page=%s&action=%s&movie=%s">Edit</a>',$_REQUEST['page'],'edit',$item->id),
-						'delete'    => sprintf('<a href="?page=%s&action=%s&movie=%s">Delete</a>',$_REQUEST['page'],'delete',$item->id),
+						'edit'      => sprintf('<a href="?page=%s&action=%s&subscriber=%s">Edit</a>',$_REQUEST['page'],'edit',$item->id),
+						'delete'    => sprintf('<a href="?page=%s&action=%s&subscriber=%s">Delete</a>',$_REQUEST['page'],'delete',$item->id),
 				);
 				
 				//Return the title contents
@@ -203,12 +205,12 @@ class TT_Example_List_Table extends WP_List_Table {
 		 * 
 		 * @see WP_List_Table::::single_row_columns()
 		 * @param array $item A singular item (one full row's worth of data)
-		 * @return string Text to be placed inside the column <td> (movie title only)
+		 * @return string Text to be placed inside the column <td> (subscriber title only)
 		 **************************************************************************/
 		function column_cb($item){
 				return sprintf(
 						'<input type="checkbox" name="%1$s[]" value="%2$s" />',
-						/*$1%s*/ $this->_args['singular'],  //Let's simply repurpose the table's singular label ("movie")
+						/*$1%s*/ $this->_args['singular'],  //Let's simply repurpose the table's singular label ("subscriber")
 						/*$2%s*/ $item->id                //The value of the checkbox should be the record's id
 				);
 		}
@@ -230,9 +232,11 @@ class TT_Example_List_Table extends WP_List_Table {
 		function get_columns(){
 				$columns = array(
 						'cb'        => '<input type="checkbox" />', //Render a checkbox instead of text
-						'name'     => 'Name',
-						'phone'    => 'Phone',
-						'email'  	=> 'Email'
+						'id'				=> 'ID',
+						'name'     	=> 'Name',
+						'phone'    	=> 'Phone',
+						'email'  		=> 'Email',
+						'place'  		=> 'Place'
 				);
 				return $columns;
 		}
@@ -254,9 +258,10 @@ class TT_Example_List_Table extends WP_List_Table {
 		 **************************************************************************/
 		function get_sortable_columns() {
 				$sortable_columns = array(
-						'title'     => array('title',false),     //true means it's already sorted
-						'rating'    => array('rating',false),
-						'director'  => array('director',false)
+						'name'     => array('name',false),     //true means it's already sorted
+						'phone'    => array('phone',false),
+						'email'  	=> array('email',false),
+						'place'  	=> array('place',false)
 				);
 				return $sortable_columns;
 		}
@@ -386,7 +391,7 @@ class TT_Example_List_Table extends WP_List_Table {
 				 */
 				function usort_reorder($a,$b){
 						$orderby = (!empty($_REQUEST->orderby)) ? $_REQUEST->orderby : 'name'; //If no sort, default to title
-						$order = (!empty($_REQUEST->order)) ? $_REQUEST->order : 'asc'; //If no order, default to asc
+						$order = (!empty($_REQUEST->order)) ? $_REQUEST->order : 'desc'; //If no order, default to asc
 						$result = strcmp($a->$orderby, $b->$orderby); //Determine sort order
 						return ($order==='asc') ? $result : -$result; //Send final sort direction to usort
 				}
