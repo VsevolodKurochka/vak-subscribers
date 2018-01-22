@@ -11,6 +11,8 @@ define( 'SUBSCRIBERS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 define( 'SUBSCRIBERS__PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
+require_once( SUBSCRIBERS__PLUGIN_DIR . 'vak-subscribers-table-class.php' );
+
 if( is_admin() ){
 	require_once( SUBSCRIBERS__PLUGIN_DIR . 'vak-subscribers-admin.php' );
 
